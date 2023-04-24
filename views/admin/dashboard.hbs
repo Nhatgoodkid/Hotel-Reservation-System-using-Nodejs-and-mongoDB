@@ -1,0 +1,54 @@
+<div class="background_table">
+    <div class="dashboard_box">
+        <div class="dashboard_box-item">
+            <h1 class="dashboard_greet">WELCOME TO MANAGEMENT </h1>
+            <div class="dashboard_icon">&#128512;</div>
+        </div>
+        <div class="dashboard_box-item">
+            <div class="dashboard_date" id="dashboardDate"></div>
+            <div class="dashboard_clock" id="dashboardClock"></div>
+        </div>
+        <div class="dashboard_box-item">
+            <img class="img" src="/images/pie-chart.svg" alt="pie-chart">
+        </div>
+        <div class="dashboard_box-item dashboard-statistical">
+            <form class="form_dashboard" method="GET" action="/admin">
+            <label for="period">Period:</label>
+            <select name="period" id="period">
+                <option value="week" {{#if period}} {{#if (eq period 'week' )}}selected{{/if}} {{/if}}>Week</option>
+                <option value="month" {{#if period}} {{#if (eq period 'month' )}}selected{{/if}} {{/if}}>Month</option>
+                <option value="year" {{#if period}} {{#if (eq period 'year' )}}selected{{/if}} {{/if}}>Year</option>
+            </select>
+            <button class="form_dashboard-btn btn btn-primary" type="submit">Get Revenue</button>
+        </form>
+
+        <div class="dashboard_content">
+            {{#if totalRevenue}}
+            <h2>Total Revenue</h2>
+            <p>Period: {{period}}</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Period</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each totalRevenue}}
+                    <tr>
+                        <td>{{this.period}}</td>
+                        <td>{{this.totalRevenue}} $</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{else}}
+            <p>No revenue data available</p>
+            {{/if}}
+        </div>
+        </div>
+
+
+        <div id="calendar"></div>
+    </div>
+</div>

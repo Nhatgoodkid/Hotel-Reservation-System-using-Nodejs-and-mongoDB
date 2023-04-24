@@ -1,0 +1,138 @@
+<div class="frame_history">
+    <div class="mb-5 d-flex justify-content-end">
+        {{#if user}}
+        <input type="text" id="emailInput" class="inputHistory form-control p-4"
+            placeholder="Enter your email to search" value="{{user.email}}">
+        {{else}}
+        <input type="text" id="emailInput" class="inputHistory form-control p-4"
+            placeholder="Enter your email to search">
+        {{/if}}
+        <span>
+            <div class="btn btn-lg btn-info text-light" id="searchHistory">Search</div>
+        </span>
+    </div>
+    <div>
+        <h1 class="fs-1 mb-5 fw-bold">Booking history</h1>
+        <div class="table-responsive">
+            <table class="table table_history table-primary fs-3 text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Date From</th>
+                        <th scope="col">Date To</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Payment</th>
+                    </tr>
+                </thead>
+                <tbody id="bodyHistory">
+
+                    {{#each reservations}}
+                    <tr class="">
+                        <td scope="row">{{sum @index 1}}</td>
+                        <td>{{formattedDateFrom}}</td>
+                        <td>{{formattedDateTo}}</td>
+                        {{#if (eq status 0)}}
+                        <td><span class="statusHistory bg-danger rounded text-light py-2 px-4">Unconfirmed...</span>
+                        </td>
+                        {{else}}
+                        <td><span class="statusHistory bg-success rounded text-light py-2 px-4">Finish</span></td>
+                        {{/if}}
+                        <td>{{totalPrice}}</td>
+                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#modalViewHistory" data-name="{{name}}"
+                                data-email="{{email}}" data-phone="{{phone}}" data-price="{{price}}"
+                                data-room="{{nameRoom}}" data-location="{{location}}" data-adult="{{adult}}"
+                                data-children="{{children}}" data-from="{{dateFrom}}" data-to="{{dateTo}}"
+                                data-total="{{totalPrice}}" data-service="{{extraService}}"
+                                data-status="{{status}}">View detail</a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalViewHistory" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="modalTitleId">View detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-dark pl-5 mt-3" id="modalViewDetail">
+                <div class="form-group">
+                    <label for="resName" class="col-form-label">User Name:</label>
+                    <input type="text" class="form-control" id="reservation-name" readonly name="name">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">User email:</label>
+                    <input type="text" class="form-control" id="reservation-email" readonly name="email">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">User phone:</label>
+                    <input type="text" class="form-control" id="reservation-phone" readonly name="phone">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Room Name:</label>
+                    <input type="text" class="form-control" readonly name="nameRoom" id="reservation-nameRoom">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Room Location:</label>
+                    <input type="text" class="form-control" readonly name="location" id="reservation-location">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Number Adult:</label>
+                    <input type="number" class="form-control" readonly name="adult" id="reservation-adult">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Number Children:</label>
+                    <input type="number" class="form-control" readonly name="children" id="reservation-children">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Date From:</label>
+                    <input type="date" class="form-control" readonly name="dateFrom" id="reservation-dateFrom">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Date To:</label>
+                    <input type="date" class="form-control" readonly name="dateTo" id="reservation-dateTo">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Room Price:</label>
+                    <input type="number" class="form-control" readonly name="price" id="reservation-price">
+                </div>
+                <div class="form-check">
+                    <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="reservation-extraService1" disabled name="extraService"
+                        value="30">
+                    <label class="form-check-label" for="extraService">
+                        Pick up at Airport
+                    </label>
+                    </div>
+                    <div class="form-check">
+
+                    <input type="checkbox" class="form-check-input" id="reservation-extraService2" disabled name="extraService"
+                        value="15">
+                    <label class="form-check-label" for="extraService">
+                        Breakfast
+                    </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Total Price:</label>
+                    <input type="number" class="form-control" readonly name="totalPrice" id="reservation-totalPrice">
+                </div>
+                <label for="status">Status:</label>
+                <select id="reservation-status" class="form-control" name="status">
+                    <option value="1"  disabled="disabled">Successful</option>
+                    <option value="0"  disabled="disabled">Unconfirmed</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
